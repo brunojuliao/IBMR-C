@@ -40,7 +40,13 @@ struct cliente* CadastrarCliente(struct cliente* clientes) {
         default:
             printf("\n%d clientes cadastrados\n", count - 1);
             if (count > TAM) {
-                clientes = (cliente*)realloc(clientes, count * sizeof(cliente));
+                int blocks = (count % TAM) + 1;
+                qtd = blocks * TAM;
+                clientes = (cliente*)realloc(clientes, qtd * sizeof(cliente));
+
+                for(int i = usado - 1; i < qtd; i++) {
+                    clientes[i] = PegarClienteVazio();
+                }
             }
             break;
     }
